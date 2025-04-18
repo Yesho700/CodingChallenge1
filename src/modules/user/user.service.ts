@@ -24,7 +24,7 @@ export class UserService {
         return await this.UserModel.findOne({where: {email: email}, attributes:['id', 'password', 'role']});
     }
 
-    async findUserById(id: string){
+    async findUserById(id: number){
         return await this.UserModel.findByPk(id);
     }
 

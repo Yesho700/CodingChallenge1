@@ -13,9 +13,7 @@ export class AdminService {
     async getAllStats(){
 
         const data1 = await this.userService.getAllStats();
-        console.log(data1)
         const data2 = await this.photoService.getPhotoWithMaxSize();
-
         return {data1, data2};
     }
 }
