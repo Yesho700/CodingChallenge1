@@ -21,7 +21,7 @@ export class UserService {
     }
 
     async findUserByEmail(email: string){
-        return await this.UserModel.findOne({where: {email: email}, attributes:['id', 'password']});
+        return await this.UserModel.findOne({where: {email: email}, attributes:['id', 'password', 'role']});
     }
 
     async findUserById(id: string){
@@ -54,7 +54,7 @@ export class UserService {
             'name',
             [sequelize.fn('array_length', sequelize.col('photoIds'), 0), 'photoCount']
           ],
-          order: [[sequelize.literal('photoCount'), 'DESC']]
+          order: [[sequelize.literal('"photoCount"'), 'DESC']] // Note the quotes
         });
       }
 
@@ -72,6 +72,7 @@ export class UserService {
     async getAllStats(){
         const photoCount = await this.getUserWithMaxPhotos();
         const userWithMaxPhotos = await this.getUserWithMaxPhotos();
-
+      
+        return {photoCount, userWithMaxPhotos}
     }
 }

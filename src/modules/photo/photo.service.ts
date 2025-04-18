@@ -23,7 +23,7 @@ export class PhotoService {
         // upload the Data to Cloudinary
         let result = await this.cloudinaryService.uploadPhoto(file, {imagemage_metadata: true, folder: 'snapify'});
         //Update the Photo Database with Meta Data and user Schema
-       
+      
         if (!result) {
             throw new Error('Cloudinary upload failed');
           }
@@ -33,6 +33,7 @@ export class PhotoService {
               url: result.secure_url,
               caption,
               userId,
+              size:result.bytes,
               width: result.width,
               height: result.height,
               format: result.format

@@ -50,8 +50,8 @@ export class AuthService {
             throw new UnauthorizedException("Invalid Credentials 2");
         }
 
-        const payload = {userId: user.id, role: user.role};
-
+        const payload = {userId: user.id, role: user.dataValues.role};
+        
         // generate accessToken
 
         const accessToken = await this.tokenService.sign(payload);

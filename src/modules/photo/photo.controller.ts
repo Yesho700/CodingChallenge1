@@ -9,7 +9,7 @@ import { CurrentUser } from 'src/decorators/currentuser.decorator';
 
 
 @UseGuards(AuthGuard)
-@Role(UserRole.USER || UserRole.ADMIN)
+@Role(UserRole.USER)
 @Controller('photos')
 export class PhotoController {
   constructor(private readonly photoService: PhotoService) {}
@@ -19,8 +19,11 @@ export class PhotoController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   async uploadPhoto(@UploadedFile() file: Express.Multer.File, @Body('caption') caption: string, @CurrentUser() userId: number){
-    if(file)
-      return this.photoService.uploadPhoto(userId, file, caption);
+    if(file){
+       await this.photoService.uploadPhoto(userId, file, caption);
+       return {message: "Photo Uploaded successfully!!"}
+    }
+    return {message: "Unable to Upload File"}
   }
 
 

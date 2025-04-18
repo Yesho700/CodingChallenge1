@@ -50,6 +50,12 @@ export class Photo extends Model<Photo | PhotoInter> {
   height: number;
 
   @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+  })
+  size: number;
+
+  @Column({
     type: DataType.STRING(10),
     allowNull: true,
   })

@@ -10,7 +10,6 @@ export class AuthGuard implements CanActivate {
     context: ExecutionContext,
   ){
 
-
     const request = context.switchToHttp().getRequest();
 
     const accessToken = request.headers.authorization?.split(' ')[1];
@@ -23,8 +22,10 @@ export class AuthGuard implements CanActivate {
 
     try{
       const payload = await this.tokenService.verify(accessToken);
+    
       request['userId'] = payload.userId;
-      return requiredRole == payload.role;
+
+      return requiredRole === payload.role;
     }catch(err){
       throw new UnauthorizedException("Invalid Credentials: Login Again!!!")
     }
