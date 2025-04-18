@@ -37,9 +37,9 @@ export class AuthService {
         //check the existence of User
 
         const user = await this.userService.findUserByEmail(email);
-        console.log(user)
+
         if(!user){
-            throw new NotFoundException("Invalid Credentials");
+            throw new NotFoundException("Invalid Credentials 1");
         }
 
         // checking the password
@@ -47,10 +47,10 @@ export class AuthService {
         const isValid = await this.tokenService.compare(password, user.dataValues.password);
 
         if(!isValid){
-            throw new UnauthorizedException("Invalid Credentials");
+            throw new UnauthorizedException("Invalid Credentials 2");
         }
 
-        const payload = {userId: user.id, role: UserRole.USER};
+        const payload = {userId: user.id, role: user.role};
 
         // generate accessToken
 

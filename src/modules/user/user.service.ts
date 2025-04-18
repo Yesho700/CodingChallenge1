@@ -10,9 +10,11 @@ export class UserService {
 
     constructor(@InjectModel(User) private UserModel: typeof User){}
 
-    // async registerAdmin(data: any){
-    //     return await this.
-    // }
+    async registerAdmin(data: any){
+        const check = await this.UserModel.findOne({where:{email:data.email}})
+        if(!check)
+            return await this.UserModel.create(data);
+    }
 
     async createUser(singupData: any){
         return await this.UserModel.create(singupData);
@@ -43,5 +45,33 @@ export class UserService {
             {photoIds: sequelize.fn('array_remove', sequelize.col('photoIds'), photoId)},
             {where:{id:userId}}
         )
+    }
+
+    async getUserWithMaxPhotos() {
+        return this.UserModel.findOne({
+          attributes: [
+            'id',
+            'name',
+            [sequelize.fn('array_length', sequelize.col('photoIds'), 0), 'photoCount']
+          ],
+          order: [[sequelize.literal('photoCount'), 'DESC']]
+        });
+      }
+
+      async getPhotoCounts() {
+        return this.UserModel.findAll({
+          attributes: [
+            'id',
+            'name',
+            [sequelize.fn('array_length', sequelize.col('photoIds'), 0), 'photoCount']
+          ],
+          order: [[sequelize.literal('photoCount'), 'DESC']]
+        });
+      }
+
+    async getAllStats(){
+        const photoCount = await this.getUserWithMaxPhotos();
+        const userWithMaxPhotos = await this.getUserWithMaxPhotos();
+
     }
 }

@@ -9,7 +9,7 @@ import { CurrentUser } from 'src/decorators/currentuser.decorator';
 
 
 @UseGuards(AuthGuard)
-@Role(UserRole.USER)
+@Role(UserRole.USER || UserRole.ADMIN)
 @Controller('photos')
 export class PhotoController {
   constructor(private readonly photoService: PhotoService) {}

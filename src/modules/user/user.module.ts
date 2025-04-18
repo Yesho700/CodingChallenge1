@@ -4,11 +4,12 @@ import { UserController } from './user.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from 'src/models/user.model';
 import { TokenModule } from '../token/token.module';
+import { AdminModule } from '../admin/admin.module';
 
 @Module({
   imports:[
     SequelizeModule.forFeature([User]),
-    TokenModule
+    TokenModule,
   ],
   controllers: [UserController],
   providers: [UserService],

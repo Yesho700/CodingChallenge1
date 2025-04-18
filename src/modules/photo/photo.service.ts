@@ -65,6 +65,14 @@ export class PhotoService {
 
         return await this.userService.photoDelete(photoId, userId);
     }
+
+    async getPhotoWithMaxSize() {
+        return this.PhotoModel.findOne({
+          attributes: ['url', 'size'],
+          order: [['size', 'DESC']],
+          raw: true
+        });
+      }
 }
 
 

@@ -10,6 +10,7 @@ import { TokenModule } from './modules/token/token.module';
 import { UserModule } from './modules/user/user.module';
 import { PhotoModule } from './modules/photo/photo.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { AdminModule } from './modules/admin/admin.module';
 
 @Module({
   imports: [
@@ -22,11 +23,11 @@ import { AuthModule } from './modules/auth/auth.module';
       imports:[ConfigModule],
       useFactory: (configService: ConfigService) => ({
         dialect: 'postgres',
-        host: configService.get<string>('DB_HOST'),
-        port: configService.get<number>('DB_PORT'),
-        username: configService.get<string>('DB_USERNAME'),
-        password: configService.get<string>('DB_PASSWORD'),
-        database: configService.get<string>('DB_NAME'),
+        host: configService.get<string>('db.host'),
+        port: configService.get<number>('db.port'),
+        username: configService.get<string>('db.username'),
+        password: configService.get<string>('db.password'),
+        database: configService.get<string>('db.name'),
         models: [User, Photo],
         autoLoadModels: true,
         synchronize: true,
@@ -36,7 +37,8 @@ import { AuthModule } from './modules/auth/auth.module';
     TokenModule,
     UserModule,
     PhotoModule,
-    AuthModule
+    AuthModule,
+    AdminModule
   ],
   controllers: [AppController],
   providers: [AppService],

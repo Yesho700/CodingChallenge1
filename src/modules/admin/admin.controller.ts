@@ -1,18 +1,19 @@
-// import { Controller, Get, UseGuards } from '@nestjs/common';
-// import { AdminService } from './admin.service';
-// import { AuthGuard } from 'src/guards/auth/auth.guard';
-// import { Role } from 'src/decorators/role.decorator';
-// import { UserRole } from 'src/interfaces/userrole';
+import { Controller, Get, UseGuards } from '@nestjs/common';
+import { AdminService } from './admin.service';
+import { AuthGuard } from 'src/guards/auth/auth.guard';
+import { Role } from 'src/decorators/role.decorator';
+import { UserRole } from 'src/interfaces/userrole';
 
-// @Controller('admin')
-// export class AdminController {
-//   constructor(private readonly adminService: AdminService) {}
+@Controller('admin')
+export class AdminController {
+  constructor(private readonly adminService: AdminService) {}
 
 
-//   @UseGuards(AuthGuard)
-//   @Role(UserRole.ADMIN)
-//   @Get('stats')
-//   async getAllStats(){
-//     return this.adminService.getAllStats();
-//   }
-// }
+
+  @Get('stats')
+  @UseGuards(AuthGuard)
+  @Role(UserRole.ADMIN)
+  async getAllStats(){
+    return this.adminService.getAllStats();
+  }
+}
