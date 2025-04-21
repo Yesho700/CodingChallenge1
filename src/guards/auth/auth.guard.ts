@@ -5,7 +5,7 @@ import { TokenService } from 'src/modules/token/token.service';
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  constructor(private readonly tokenService: TokenService, private readonly reflector: Reflector){}
+  constructor(private readonly tokenService: TokenService){}
   async canActivate(
     context: ExecutionContext,
   ){
@@ -17,15 +17,13 @@ export class AuthGuard implements CanActivate {
     if(!accessToken){
       throw new UnauthorizedException("Login Again");
     }
-
-    const requiredRole = this.reflector.getAllAndOverride("role", [context.getHandler(), context.getClass()])
-
+    
     try{
       const payload = await this.tokenService.verify(accessToken);
     
       request['userId'] = payload.userId;
+      request['role'] = payload.role;
 
-      return requiredRole === payload.role;
     }catch(err){
       throw new UnauthorizedException("Invalid Credentials: Login Again!!!")
     }

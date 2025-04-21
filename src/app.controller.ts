@@ -1,9 +1,11 @@
+import { UserRole } from './interfaces/userrole';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { CurrentUser } from './decorators/currentuser.decorator';
 import { UserService } from './modules/user/user.service';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { Role } from './decorators/role.decorator';
 
 @ApiTags('App') // Groups these endpoints under "App" in Swagger UI
 @Controller()

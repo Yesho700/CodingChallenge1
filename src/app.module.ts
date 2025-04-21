@@ -31,6 +31,7 @@ import { AdminModule } from './modules/admin/admin.module';
         models: [User, Photo],
         autoLoadModels: true,
         synchronize: true,
+        logging: false
       }),
       inject: [ConfigService],
     }),

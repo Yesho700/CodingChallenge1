@@ -4,6 +4,7 @@ import { AuthGuard } from 'src/guards/auth/auth.guard';
 import { Role } from 'src/decorators/role.decorator';
 import { UserRole } from 'src/interfaces/userrole';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { RoleGuard } from 'src/guards/role/role.guard';
 
 @ApiTags('Admin')
 @ApiBearerAuth('JWT')
@@ -12,7 +13,7 @@ export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
   @Get('stats')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RoleGuard)
   @Role(UserRole.ADMIN)
   @ApiOperation({ summary: 'Get admin statistics' })
   @ApiResponse({ status: 200, description: 'Returns admin statistics' })

@@ -25,7 +25,7 @@ export class UserService {
     }
 
     async findUserById(id: number){
-        return await this.UserModel.findByPk(id);
+        return await this.UserModel.findByPk(id,{attributes: ['name', 'id', 'role', 'photoIds']});
     }
 
     async getAllPhotos(userId: number){

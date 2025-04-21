@@ -6,10 +6,11 @@ import { Role } from 'src/decorators/role.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CurrentUser } from 'src/decorators/currentuser.decorator';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth, ApiConsumes, ApiBody, ApiParam } from '@nestjs/swagger';
+import { RoleGuard } from 'src/guards/role/role.guard';
 
 @ApiTags('Photos')
 @ApiBearerAuth('JWT')
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard, RoleGuard)
 @Role(UserRole.USER)
 @Controller('photos')
 export class PhotoController {
